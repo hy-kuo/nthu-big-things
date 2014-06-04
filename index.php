@@ -2,6 +2,7 @@
 include("mysqlInc.php");
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,11 +20,19 @@ include("mysqlInc.php");
     <!-- Add custom CSS here -->
     <link href="./css/full-slider.css" rel="stylesheet">
     <link href="./css/weather.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="./dist/js/bootstrap.js"></script>
+
 
 </head>
 
 <body>
-
+    <!-- Script to Activate the Carousel -->
+    <script type="text/javascript">
+    $('.carousel').carousel({
+        interval: 5000 //changes the speed
+    })
+    </script>
 
     <div id="myCarousel" class="carousel slide">
         <!-- Indicators -->
@@ -53,12 +62,17 @@ include("mysqlInc.php");
                         $collapseN = 'collapse';
                         $i='1';
                         while($row = mysql_fetch_array($result)){
-
+                            $tags = explode(" ", $row['tag']);
                             echo '<div class="panel panel-default"><div class="panel-heading">
                                 <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#'.$collapseN.$i.'">';
-                            echo $row['title'].'</a></h4></div>';
+                            echo '<b>'.$row['title'].'</b></a></h4></div>';
                             echo '<div id="'.$collapseN.$i.'" class="panel-collapse collapse"><div class="panel-body">'.$row['content'].'</div>';
-                            echo $row['tag'].'</div></div>';
+                            echo '<a href="index.php?keyword='.$tags[0].'">'.$tags[0].'</a> ';
+                            echo '<a href="index.php?keyword='.$tags[1].'">'.$tags[1].'</a> ';
+                            echo '<a href="index.php?keyword='.$tags[2].'">'.$tags[2].'</a> ';
+                            echo '<a href="index.php?keyword='.$tags[3].'">'.$tags[3].'</a> ';
+                            echo '<a href="index.php?keyword='.$tags[4].'">'.$tags[4].'</a> ';
+                            echo '</div></div>';
                             $i++;
                             }
                         echo'</div>';
@@ -81,12 +95,17 @@ include("mysqlInc.php");
                         $collapseN = 'collapse';
                         $i='11';
                         while($row = mysql_fetch_array($result)){
-
+                            $tags = explode(" ", $row['tag']);
                             echo '<div class="panel panel-default"><div class="panel-heading">
                                 <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion1" href="#'.$collapseN.$i.'">';
-                            echo $row['title'].'</a></h4></div>';
+                            echo '<b>'.$row['title'].'</b></a></h4></div>';
                             echo '<div id="'.$collapseN.$i.'" class="panel-collapse collapse"><div class="panel-body">'.$row['content'].'</div>';
-                            echo $row['tag'].'</div></div>';
+                            echo '<a href="index.php?keyword='.$tags[0].'">'.$tags[0].'</a> ';
+                            echo '<a href="index.php?keyword='.$tags[1].'">'.$tags[1].'</a> ';
+                            echo '<a href="index.php?keyword='.$tags[2].'">'.$tags[2].'</a> ';
+                            echo '<a href="index.php?keyword='.$tags[3].'">'.$tags[3].'</a> ';
+                            echo '<a href="index.php?keyword='.$tags[4].'">'.$tags[4].'</a> ';
+                            echo '</div></div>';
                             $i++;
                             }
                         echo'</div>';
@@ -110,19 +129,60 @@ include("mysqlInc.php");
 
                     </div>
 
+                <script type="text/javascript">
+                    function goToSlide(number) {
+                       $("#myCarousel").carousel(number);
+                    }
+                </script>
                 </div>
-                <div class="carousel-caption"> 
-        
+                <div class="carousel-caption" id ="searchResult" style="display:block; top:100px;"> 
+                    <div >
+                        <form  action="index.php" method="GET" class="navbar-form navbar-left" style="margin-left:35%;">
+                            <div class="form-group">
+                                <input type="text" name="keyword" class="form-control" placeholder="搜尋校內公告關鍵字">
+                            </div>
+                            <button type="submit" id="submitBtn" class="btn btn-default" >Submit</button>
+                        </form>
+                     </br>
+                 </br></br>
+                    </div>
+                <script type="text/javascript">
+                </script>;
+             
 
+             <?php
+                if($_GET['keyword']!=NULL){
+                    ///// record article1 num
+                    $keyword = mysql_real_escape_string($_GET['keyword']);
+                    $keyword = "%".$keyword."%";
 
-
-              <form class="navbar-form navbar-left" role="search">
-                <div class="form-group">
-                  <input type="text" class="form-control" placeholder="搜尋校內公告關鍵字">
-                </div>
-                <button type="submit" class="btn btn-default">Submit</button>
-              </form>
-
+                    echo '<div class="panel-group" id="accordion2">';
+                    $sql = "SELECT * FROM article WHERE title LIKE BINARY '$keyword'";
+                    $result = mysql_query($sql);
+                    $collapseN = 'collapse';
+                    $i='21';
+                    $no_row = 1;
+                    while($row = mysql_fetch_array($result)){
+                        $no_row = 0;
+                        $tags = explode(" ", $row['tag']);
+                        echo '<div class="panel panel-default"><div class="panel-heading">
+                            <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion2" href="#'.$collapseN.$i.'">';
+                        echo '<b>'.$row['title'].'</b></a></h4></div>';
+                        echo '<div id="'.$collapseN.$i.'" class="panel-collapse collapse"><div class="panel-body">'.$row['content'].'</div>';
+                        echo '<a href="index.php?keyword='.$tags[0].'">'.$tags[0].'</a> ';
+                        echo '<a href="index.php?keyword='.$tags[1].'">'.$tags[1].'</a> ';
+                        echo '<a href="index.php?keyword='.$tags[2].'">'.$tags[2].'</a> ';
+                        echo '<a href="index.php?keyword='.$tags[3].'">'.$tags[3].'</a> ';
+                        echo '<a href="index.php?keyword='.$tags[4].'">'.$tags[4].'</a> ';
+                        echo '</div></div>';
+                        $i++;
+                    }
+                    if($no_row){echo "<b style=\"color:#FFFFFF;font-size:32px;\">SORRY!</b>";}
+                    echo'</div>';
+                    echo "<script>goToSlide(2);</script>";
+                }
+            ?>
+               
 
                 </div>
             </div>
@@ -141,21 +201,12 @@ include("mysqlInc.php");
     </div>
     <!-- /.container -->
 
-    <!-- JavaScript -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="./dist/js/bootstrap.js"></script>
+
+</body>
+        <!-- JavaScript -->
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
     <script src="./dist/js/stopAutoScroll.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.0.0/moment.min.js"></script>
     <script src="./dist/js/weather.js"></script>
     <script src="./dist/js/slideEvent.js"></script>
-
-    <!-- Script to Activate the Carousel -->
-    <script>
-    $('.carousel').carousel({
-        interval: 5000 //changes the speed
-    })
-    </script>
-</body>
-
 </html>
