@@ -29,7 +29,6 @@ include("mysqlInc.php");
         <!-- Indicators -->
 
         <ol class="carousel-indicators">
-             <div >all right dfjaiwej djfais<div>
 
             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
             <li data-target="#myCarousel" data-slide-to="1"></li>
@@ -137,6 +136,7 @@ include("mysqlInc.php");
     <script src="./dist/js/stopAutoScroll.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.0.0/moment.min.js"></script>
     <script src="./dist/js/weather.js"></script>
+    <script src="./dist/js/slideEvent.js"></script>
 
     <!-- Script to Activate the Carousel -->
     <script>
