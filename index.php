@@ -29,7 +29,6 @@ include("mysqlInc.php");
         <!-- Indicators -->
 
         <ol class="carousel-indicators">
-             <div >all right dfjaiwej djfais<div>
 
             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
             <li data-target="#myCarousel" data-slide-to="1"></li>
@@ -39,6 +38,7 @@ include("mysqlInc.php");
         <!-- Wrapper for slides -->
         <div class="carousel-inner">
             <div class="item active">
+
                 <div class="banner" >
                     <img src="./images/banner-white.png" sytle="opacity:0.5;">
                 </div>
@@ -95,11 +95,10 @@ include("mysqlInc.php");
 
                 </div>
             </div>
+            <!---第三頁-->
             <div class="item">
-                <div class="fill" style=""></div>
-                <div class="carousel-caption">
-
-                    <div id="weather">
+                <div class="fill" style="">
+                    <div id="weather" >
 
                         <ul id="scroller">
                             <!-- The forecast items will go here -->
@@ -107,10 +106,22 @@ include("mysqlInc.php");
 
                         <a href="#" class="arrow previous">Previous</a>
                         <a href="#" class="arrow next">Next</a>
+                    <p class="location"></p>
 
                     </div>
-                    <p class="location"></p>
+
+                </div>
+                <div class="carousel-caption"> 
         
+
+
+
+              <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="搜尋校內公告關鍵字">
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+              </form>
 
 
                 </div>
