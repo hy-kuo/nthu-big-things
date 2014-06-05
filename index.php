@@ -100,7 +100,6 @@ include("mysqlInc.php");
                         $collapseN = 'collapse';
                         $i='11';
                         while($row = mysql_fetch_array($result)){
-                            $tags = explode(" ", $row['tag']);
                             echo '<div class="panel panel-default"><div class="panel-heading">
                                 <h4 class="panel-title"><a class ="title" data-toggle="collapse" data-parent="#accordion1" href="#'.$collapseN.$i.'">';
                             echo '<b>'.$row['title'].'</b></a></h4></div>';
