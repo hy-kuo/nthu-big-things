@@ -169,7 +169,7 @@ nthu.meisu@gmail.com";
                 $new_idfs[] = $new_idf;
                 $sql = "UPDATE word SET idf='$new_idf' where article_num = '$i'";
                 mysql_query($sql);
-                echo "article_num: ".$i." idf: ".$new_idfs[$i-1]."\n";
+                //echo "article_num: ".$i." idf: ".$new_idfs[$i-1]."\n";
             } 
 
             $i = $maxArticleNum+1;
@@ -207,13 +207,18 @@ nthu.meisu@gmail.com";
             }   
 
             array_multisort($tf_idf, SORT_DESC, SORT_NUMERIC,
-                        $word, SORT_DESC, SORT_STRING);
+                        $word, SORT_DESC, SORT_STRING,
+                        $tf, SORT_DESC, SORT_NUMERIC);
 
             $importance = 0;
             $interest = 0;
             for ($i=0; $i < 5; $i++) {
                 $thisWord = $word[$i];
-                $tag .= " ".$thisWord;
+                $thisTf = $tf[$i];
+                //$tag .= " ".$thisWord;
+
+                $sql = "INSERT INTO tag (articleId, tag, tf) VALUES ($id, '$thisWord', $thisTf)";
+                mysql_query($sql);
 
                 $sql = "SELECT * FROM word where word = '$thisWord'";
                 $result = mysql_query($sql);
@@ -223,7 +228,7 @@ nthu.meisu@gmail.com";
                 $interest += $row['interest_w']*$tf_idf[$i];        
             }
             
-            $sql = "UPDATE article SET tag = '$tag', importance = '$importance', interest = '$interest' where id='$id'";
+            $sql = "UPDATE article SET importance = '$importance', interest = '$interest' where id='$id'";
             mysql_query($sql);
 
         }

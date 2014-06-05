@@ -20,6 +20,7 @@ include("mysqlInc.php");
     <!-- Add custom CSS here -->
     <link href="./css/full-slider.css" rel="stylesheet">
     <link href="./css/weather.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="./dist/js/bootstrap.js"></script>
 
@@ -32,6 +33,7 @@ include("mysqlInc.php");
     $('.carousel').carousel({
         interval: 5000 //changes the speed
     })
+    $.post( "php_recal_interest.php");
     </script>
 
     <div id="myCarousel" class="carousel slide">
@@ -64,14 +66,16 @@ include("mysqlInc.php");
                         while($row = mysql_fetch_array($result)){
                             $tags = explode(" ", $row['tag']);
                             echo '<div class="panel panel-default"><div class="panel-heading">
-                                <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#'.$collapseN.$i.'">';
+                                <h4 class="panel-title"><a class ="title" data-toggle="collapse" data-parent="#accordion" href="#'.$collapseN.$i.'">';
                             echo '<b>'.$row['title'].'</b></a></h4></div>';
                             echo '<div id="'.$collapseN.$i.'" class="panel-collapse collapse"><div class="panel-body">'.$row['content'].'</div>';
-                            echo '<a href="index.php?keyword='.$tags[0].'">'.$tags[0].'</a> ';
-                            echo '<a href="index.php?keyword='.$tags[1].'">'.$tags[1].'</a> ';
-                            echo '<a href="index.php?keyword='.$tags[2].'">'.$tags[2].'</a> ';
-                            echo '<a href="index.php?keyword='.$tags[3].'">'.$tags[3].'</a> ';
-                            echo '<a href="index.php?keyword='.$tags[4].'">'.$tags[4].'</a> ';
+                            //echo '<a href="index.php?keyword='.$tags[0].'">'.$tags[0].'</a> ';
+                            $articleId = $row['id'];
+                            $t_sql = "SELECT * FROM tag WHERE articleId = '$articleId'";
+                            $t_result = mysql_query($t_sql);
+                            while($t_row = mysql_fetch_array($t_result)){
+                                echo '<a href="index.php?keyword='.$t_row['tag'].'">'.$t_row['tag'].'</a> ';
+                            } 
                             echo '</div></div>';
                             $i++;
                             }
@@ -90,6 +94,7 @@ include("mysqlInc.php");
                 <div class="carousel-caption" style="top:100px;">
                     <?php
                         echo '<div class="panel-group" id="accordion1">';
+
                         $sql = "SELECT * FROM article ORDER BY interest DESC LIMIT 10";
                         $result = mysql_query($sql);
                         $collapseN = 'collapse';
@@ -97,14 +102,16 @@ include("mysqlInc.php");
                         while($row = mysql_fetch_array($result)){
                             $tags = explode(" ", $row['tag']);
                             echo '<div class="panel panel-default"><div class="panel-heading">
-                                <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion1" href="#'.$collapseN.$i.'">';
+                                <h4 class="panel-title"><a class ="title" data-toggle="collapse" data-parent="#accordion1" href="#'.$collapseN.$i.'">';
                             echo '<b>'.$row['title'].'</b></a></h4></div>';
                             echo '<div id="'.$collapseN.$i.'" class="panel-collapse collapse"><div class="panel-body">'.$row['content'].'</div>';
-                            echo '<a href="index.php?keyword='.$tags[0].'">'.$tags[0].'</a> ';
-                            echo '<a href="index.php?keyword='.$tags[1].'">'.$tags[1].'</a> ';
-                            echo '<a href="index.php?keyword='.$tags[2].'">'.$tags[2].'</a> ';
-                            echo '<a href="index.php?keyword='.$tags[3].'">'.$tags[3].'</a> ';
-                            echo '<a href="index.php?keyword='.$tags[4].'">'.$tags[4].'</a> ';
+                            //echo '<a href="index.php?keyword='.$tags[0].'">'.$tags[0].'</a> ';
+                            $articleId = $row['id'];
+                            $t_sql = "SELECT * FROM tag WHERE articleId = '$articleId'";
+                            $t_result = mysql_query($t_sql);
+                            while($t_row = mysql_fetch_array($t_result)){
+                                echo '<a href="index.php?keyword='.$t_row['tag'].'">'.$t_row['tag'].'</a> ';
+                            } 
                             echo '</div></div>';
                             $i++;
                             }
@@ -139,15 +146,13 @@ include("mysqlInc.php");
                     <div >
                         <form  action="index.php" method="GET" class="navbar-form navbar-left" style="margin-left:35%;">
                             <div class="form-group">
-                                <input type="text" name="keyword" class="form-control" placeholder="搜尋校內公告關鍵字">
+                                <input type="text" name="keyword" class="form-control" placeholder="搜尋校內公告關鍵字" style="width:200px; opacity:0.5;">
                             </div>
-                            <button type="submit" id="submitBtn" class="btn btn-default" >Submit</button>
+                            <button type="submit" id="submitBtn" class="btn btn-default" style="width:70px; opacity:0.8;" ><div data-icon="b"></div></button>                            
                         </form>
                      </br>
                  </br></br>
                     </div>
-                <script type="text/javascript">
-                </script>;
              
 
              <?php
@@ -164,16 +169,19 @@ include("mysqlInc.php");
                     $no_row = 1;
                     while($row = mysql_fetch_array($result)){
                         $no_row = 0;
-                        $tags = explode(" ", $row['tag']);
+                        //$tags = explode(" ", $row['tag']);
                         echo '<div class="panel panel-default"><div class="panel-heading">
-                            <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion2" href="#'.$collapseN.$i.'">';
+                            <h4 class="panel-title"><a class ="title" data-toggle="collapse" data-parent="#accordion2" href="#'.$collapseN.$i.'">';
                         echo '<b>'.$row['title'].'</b></a></h4></div>';
                         echo '<div id="'.$collapseN.$i.'" class="panel-collapse collapse"><div class="panel-body">'.$row['content'].'</div>';
-                        echo '<a href="index.php?keyword='.$tags[0].'">'.$tags[0].'</a> ';
-                        echo '<a href="index.php?keyword='.$tags[1].'">'.$tags[1].'</a> ';
-                        echo '<a href="index.php?keyword='.$tags[2].'">'.$tags[2].'</a> ';
-                        echo '<a href="index.php?keyword='.$tags[3].'">'.$tags[3].'</a> ';
-                        echo '<a href="index.php?keyword='.$tags[4].'">'.$tags[4].'</a> ';
+                        $articleId = $row['id'];
+                        $t_sql = "SELECT * FROM tag WHERE articleId = '$articleId'";
+                        $t_result = mysql_query($t_sql);
+                        while($t_row = mysql_fetch_array($t_result)){
+                            echo '<a href="index.php?keyword='.$t_row['tag'].'">'.$t_row['tag'].'</a> ';
+                        }                   
+                        //echo $row['tag'];
+                        //var_dump($tags);
                         echo '</div></div>';
                         $i++;
                     }
@@ -181,7 +189,14 @@ include("mysqlInc.php");
                     echo'</div>';
                     echo "<script>goToSlide(2);</script>";
                 }
-            ?>
+            ?>  
+                <script type="text/javascript">
+                    $( ".title" ).click(function() {
+                        title = $(this).text();
+                        alert(title);
+                        $.post( "php_incrementInterest.php?title="+title );
+                    });
+                </script>
                
 
                 </div>
