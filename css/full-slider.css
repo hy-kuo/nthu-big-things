@@ -2,6 +2,7 @@ html, body {
 	height:100%;
 }
 
+
 .carousel,
 .item,
 .active {
@@ -42,6 +43,8 @@ html, body {
 .panel.active{
 	background-color: #ffffff;
 }
+
+
 .panel{
     cursor: default;
 }
