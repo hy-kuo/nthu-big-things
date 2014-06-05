@@ -193,7 +193,7 @@ include("mysqlInc.php");
                 <script type="text/javascript">
                     $( ".title" ).click(function() {
                         title = $(this).text();
-                        alert(title);
+                        //alert(title);
                         $.post( "php_incrementInterest.php?title="+title );
                     });
                 </script>
