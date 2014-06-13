@@ -159,8 +159,8 @@ nthu.meisu@gmail.com";
 
             ///// update idf of whole words
             $sql = "SELECT MAX(article_num) FROM word";
-            $result = mysql_query($sql);
-            $row = mysql_fetch_array($result);
+            $inner_result = mysql_query($sql);
+            $row = mysql_fetch_array($inner_result);
             echo "max article num: ".$row[0]."\n";
             $maxArticleNum = $row[0];
 
@@ -184,8 +184,8 @@ nthu.meisu@gmail.com";
                 $tf[] = $freq[$i] / $freqSum;
                 
                 $sql = "SELECT * FROM word where word = '$thisWord'";
-                $result = mysql_query($sql);
-                $row = mysql_fetch_array($result);
+                $inner_result = mysql_query($sql);
+                $row = mysql_fetch_array($inner_result);
                 if($row == null){
                     $new_article_num = 1;
                     $new_idf = $new_idfs[$new_article_num-1];
@@ -221,8 +221,8 @@ nthu.meisu@gmail.com";
                 mysql_query($sql);
 
                 $sql = "SELECT * FROM word where word = '$thisWord'";
-                $result = mysql_query($sql);
-                $row = mysql_fetch_array($result);
+                $inner_result = mysql_query($sql);
+                $row = mysql_fetch_array($inner_result);
 
                 $importance += $row['importance_w']*$tf_idf[$i];
                 $interest += $row['interest_w']*$tf_idf[$i];        
